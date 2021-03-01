@@ -12,10 +12,21 @@
         $port = 25565;
     }
 
+    if ( array_key_exists("pre17", $_GET) ) {
+        $pre17 = $_GET["pre17"] === 'true'? true: false;
+    } else {
+        $pre17 = false;
+    }
+
     try
     {
         $Query = new MinecraftPing( $server, $port );
-        echo JSON_Encode( $Query->Query() );
+
+        if ($pre17) {
+            echo JSON_Encode( $Query->QueryOldPre17() );
+        } else {
+            echo JSON_Encode( $Query->Query() );
+        }
     }
     catch( MinecraftPingException $e )
     {

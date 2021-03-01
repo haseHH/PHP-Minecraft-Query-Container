@@ -6,9 +6,31 @@
         <p>
             To execute a simple ping request to a Minecraft Java Edition Server navigate to ping.php and provide the server address and port (if not default) via the query parameters. Examples:
         </p>
-        <ul>
-            <li><a href="./ping.php?server=mc.hypixel.net">ping.php?server=mc.hypixel.net</a></li>
-            <li><a href="./ping.php?server=mc.hypixel.net&port=25565">ping.php?server=mc.hypixel.net&port=25565</a></li>
-        </ul>
+        <table>
+            <tr>
+                <td>
+                    Server address only:
+                </td>
+                <td>
+                    <a href="./ping.php?server=mc.hypixel.net">/ping.php?server=mc.hypixel.net</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Server address and port:
+                </td>
+                <td>
+                    <a href="./ping.php?server=mc.hypixel.net&port=25565">/ping.php?server=mc.hypixel.net&port=25565</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Pre 1.7 legacy server:
+                </td>
+                <td>
+                    <a href="./ping.php?server=172.31.144.1&pre17=true">/ping.php?server=172.31.144.1&pre17=true</a>
+                </td>
+            </tr>
+        </table>
     </body>
 </html>
