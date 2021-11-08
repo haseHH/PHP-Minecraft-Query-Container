@@ -6,14 +6,20 @@ This small service relies on functions from [xPaw/PHP-Minecraft-Query](https://g
 
 ## Usage
 
-Build and run the container:
+Pull the container image [from Docker Hub](https://hub.docker.com/r/hasehh/php-minecraft-query) and start a container instance:
+
+```
+docker run -d -p 9000:80 --name php-minecraft-query-container hasehh/php-minecraft-query
+```
+
+Or build it yourself and run the container with that version:
 
 ```
 docker build -t php-minecraft-query .
 docker run -d -p 9000:80 --name php-minecraft-query-container php-minecraft-query
 ```
 
-Open the resulting webserver with your browser by navigating to [http://localhost:9000](http://localhost:9000) and look at the examples.
+Access the resulting webserver with your browser by navigating to [http://localhost:9000](http://localhost:9000) and look at the examples.
 
 Remove the container when no longer needed:
 
