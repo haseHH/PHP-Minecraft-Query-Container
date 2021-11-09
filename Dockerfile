@@ -7,3 +7,5 @@ RUN mkdir /var/www/html/lib; \
         --output /var/www/html/lib/MinecraftPingException.php --silent
 
 COPY src/ /var/www/html/
+
+LABEL org.opencontainers.image.source="https://github.com/haseHH/PHP-Minecraft-Query-Container"
