@@ -6,17 +6,17 @@ This small service relies on functions from [xPaw/PHP-Minecraft-Query](https://g
 
 ## Usage
 
-Pull the container image [from Docker Hub](https://hub.docker.com/r/hasehh/php-minecraft-query) and start a container instance:
+Pull the container image from the [GitHub Container Registry](https://github.com/haseHH/PHP-Minecraft-Query-Container/pkgs/container/php-minecraft-query) and start a container instance:
 
 ```
-docker run -d -p 9000:80 --name php-minecraft-query-container hasehh/php-minecraft-query
+docker run -d -p 9000:80 --name php-minecraft-query-container ghcr.io/hasehh/php-minecraft-query:latest
 ```
 
 Or build it yourself and run the container with that version:
 
 ```
-docker build -t php-minecraft-query .
-docker run -d -p 9000:80 --name php-minecraft-query-container php-minecraft-query
+docker build -t php-minecraft-query:custom .
+docker run -d -p 9000:80 --name php-minecraft-query-container php-minecraft-query:custom
 ```
 
 Access the resulting webserver with your browser by navigating to [http://localhost:9000](http://localhost:9000) and look at the examples.
