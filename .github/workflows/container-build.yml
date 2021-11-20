@@ -19,6 +19,26 @@ jobs:
     name: Container Build
     runs-on: ubuntu-latest
     steps:
+      - name: Get available platforms from base image
+        run: |
+          $baseImage = "php:8-apache"
+          Write-Host "GET manifest OF base image [ '${baseImage}' ] FROM docker hub"
+          $manifestJson = $(docker manifest inspect --verbose $baseImage)
+          $manifest = ConvertFrom-Json -InputObject ($manifestJson | Out-String)
+          Write-Host "GET supported platforms FROM manifest"
+          $platformArray = $manifest | ForEach-Object {
+            $platform = @(
+              $_.Descriptor.platform.os,
+              $_.Descriptor.platform.architecture,
+              $_.Descriptor.platform.variant
+            ) | Where-Object {-not [string]::IsNullOrEmpty($_)}
+            $platform -join '/'
+          } | Sort-Object
+          $platforms = $platformArray -join ','
+          Write-Host "SET environment variable [ 'container_platforms' ] TO [ '${platforms}' ]"
+          Out-File -InputObject "container_platforms=${platforms}" -FilePath $env:GITHUB_ENV -Append
+        shell: pwsh
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -36,7 +56,7 @@ jobs:
         id: try1
         uses: docker/build-push-action@v2
         with:
-          platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
+          platforms: ${{ env.container_platforms }}
           push: true
           tags: ghcr.io/hasehh/php-minecraft-query:latest
         timeout-minutes: 15
@@ -46,7 +66,7 @@ jobs:
         id: try2
         uses: docker/build-push-action@v2
         with:
-          platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
+          platforms: ${{ env.container_platforms }}
           push: true
           tags: ghcr.io/hasehh/php-minecraft-query:latest
         timeout-minutes: 15
@@ -57,7 +77,7 @@ jobs:
         id: try3
         uses: docker/build-push-action@v2
         with:
-          platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
+          platforms: ${{ env.container_platforms }}
           push: true
           tags: ghcr.io/hasehh/php-minecraft-query:latest
         timeout-minutes: 15
@@ -68,7 +88,7 @@ jobs:
         id: try4
         uses: docker/build-push-action@v2
         with:
-          platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
+          platforms: ${{ env.container_platforms }}
           push: true
           tags: ghcr.io/hasehh/php-minecraft-query:latest
         timeout-minutes: 15
@@ -78,7 +98,7 @@ jobs:
       - name: Build and push container image (Try 5)
         uses: docker/build-push-action@v2
         with:
-          platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
+          platforms: ${{ env.container_platforms }}
           push: true
           tags: ghcr.io/hasehh/php-minecraft-query:latest
         timeout-minutes: 15
